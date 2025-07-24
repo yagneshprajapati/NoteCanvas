@@ -1,0 +1,837 @@
+/* Tailwind Extensions */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* Set default font */
+* {
+  font-family: "Inter", sans-serif;
+}
+
+/* Toolbar buttons */
+.toolbar-btn {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: rgb(55, 65, 81);
+  color: white;
+  transition: background-color 0.2s;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+}
+
+.toolbar-btn:hover {
+  background-color: rgb(37, 99, 235);
+}
+
+/* Modals */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: rgb(31, 41, 55);
+  border: 1px solid rgb(75, 85, 99);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  max-width: 28rem;
+  width: 100%;
+  margin: 0 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: rgb(55, 65, 81);
+  border: 1px solid rgb(75, 85, 99);
+  border-radius: 0.5rem;
+  color: white;
+  outline: none;
+}
+
+.input-field:focus {
+  box-shadow: 0 0 0 2px rgb(59, 130, 246);
+  border-color: rgb(59, 130, 246);
+}
+
+.btn-primary {
+  padding: 0.5rem 1rem;
+  background-color: rgb(37, 99, 235);
+  color: white;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: rgb(29, 78, 216);
+}
+
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  background-color: rgb(75, 85, 99);
+  color: white;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: rgb(55, 65, 81);
+}
+
+.context-menu-item {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.context-menu-item:hover {
+  background-color: rgb(55, 65, 81);
+}
+
+/* Grid Background */
+#grid-background {
+  background-image: linear-gradient(
+      rgba(59, 130, 246, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Note Styles */
+.note {
+  position: absolute;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  cursor: move;
+  min-width: 200px;
+  min-height: 100px;
+  pointer-events: auto; /* Ensure notes can receive events */
+}
+
+.note:hover {
+  border-color: rgb(59, 130, 246);
+}
+
+.note.selected {
+  border-color: rgb(59, 130, 246);
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.25);
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+.note.multi-selected {
+  border-color: rgb(147, 51, 234);
+  box-shadow: 0 10px 15px -3px rgba(147, 51, 234, 0.25);
+  position: relative;
+}
+
+.note.multi-selected::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border: 2px dashed rgb(147, 51, 234);
+  border-radius: 0.75rem;
+  pointer-events: none;
+  animation: dash 2s linear infinite;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 20;
+  }
+}
+
+/* Selection box for multi-select */
+.selection-box {
+  position: absolute;
+  border: 2px dashed rgb(59, 130, 246);
+  background-color: rgba(59, 130, 246, 0.1);
+  pointer-events: none;
+  z-index: 1000;
+  animation: selectBoxPulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes selectBoxPulse {
+  from {
+    background-color: rgba(59, 130, 246, 0.05);
+  }
+  to {
+    background-color: rgba(59, 130, 246, 0.15);
+  }
+}
+
+/* Canvas interaction styling */
+#canvas {
+  cursor: grab;
+}
+
+#canvas.grabbing {
+  cursor: grabbing !important;
+}
+
+#canvas:active {
+  cursor: grabbing;
+}
+
+.note-text {
+  background-color: rgba(55, 65, 81, 0.95);
+  backdrop-filter: blur(4px);
+  color: rgb(243, 244, 246);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  resize: none;
+  border: none;
+  outline: none;
+  min-height: 100px;
+  font-family: "Inter", sans-serif;
+}
+
+.note-image {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto;
+}
+
+.note-content {
+  width: 100%;
+  height: 100%;
+}
+
+/* Resize Handles */
+.resize-handle {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: rgb(59, 130, 246);
+  border: 1px solid white;
+  border-radius: 0.125rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.note.selected .resize-handle {
+  opacity: 1;
+}
+
+.resize-handle.se {
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+  transform: translate(50%, 50%);
+}
+
+.resize-handle.sw {
+  bottom: 0;
+  left: 0;
+  cursor: sw-resize;
+  transform: translate(-50%, 50%);
+}
+
+.resize-handle.ne {
+  top: 0;
+  right: 0;
+  cursor: ne-resize;
+  transform: translate(50%, -50%);
+}
+
+.resize-handle.nw {
+  top: 0;
+  left: 0;
+  cursor: nw-resize;
+  transform: translate(-50%, -50%);
+}
+
+.resize-handle.n {
+  top: 0;
+  left: 50%;
+  cursor: n-resize;
+  transform: translate(-50%, -50%);
+}
+
+.resize-handle.s {
+  bottom: 0;
+  left: 50%;
+  cursor: s-resize;
+  transform: translate(-50%, 50%);
+}
+
+.resize-handle.e {
+  right: 0;
+  top: 50%;
+  cursor: e-resize;
+  transform: translate(50%, -50%);
+}
+
+.resize-handle.w {
+  left: 0;
+  top: 50%;
+  cursor: w-resize;
+  transform: translate(-50%, -50%);
+}
+
+/* Markdown Content */
+.markdown-content {
+  max-width: none;
+  color: rgb(243, 244, 246);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  position: relative;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+}
+
+.markdown-content.selected {
+  outline: 2px solid rgb(59, 130, 246);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+.markdown-content h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  margin-top: 1rem;
+  color: rgb(147, 197, 253);
+  border-bottom: 2px solid rgb(75, 85, 99);
+  padding-bottom: 0.5rem;
+}
+
+.markdown-content h1:first-child {
+  margin-top: 0;
+}
+
+.markdown-content h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  color: rgb(147, 197, 253);
+}
+
+.markdown-content h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  margin-top: 0.75rem;
+  color: rgb(147, 197, 253);
+}
+
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  color: rgb(147, 197, 253);
+}
+
+.markdown-content p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+}
+
+.markdown-content li {
+  margin-bottom: 0.25rem;
+  line-height: 1.5;
+}
+
+.markdown-content a {
+  color: rgb(59, 130, 246);
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.markdown-content a:hover {
+  color: rgb(147, 197, 253);
+}
+
+.markdown-content strong {
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+}
+
+.markdown-content em {
+  font-style: italic;
+  color: rgb(229, 231, 235);
+}
+
+.markdown-content code {
+  background-color: rgb(31, 41, 55);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  color: rgb(147, 197, 253);
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  border: 1px solid rgb(55, 65, 81);
+}
+
+.markdown-content pre {
+  background-color: rgb(17, 24, 39);
+  border: 1px solid rgb(55, 65, 81);
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.markdown-content pre code {
+  display: block;
+  padding: 1rem;
+  overflow-x: auto;
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: rgb(229, 231, 235);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  white-space: pre;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid rgb(59, 130, 246);
+  background-color: rgba(59, 130, 246, 0.1);
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+  color: rgb(209, 213, 219);
+}
+
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  background-color: rgb(31, 41, 55);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.markdown-content th,
+.markdown-content td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgb(55, 65, 81);
+}
+
+.markdown-content th {
+  background-color: rgb(55, 65, 81);
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+}
+
+.markdown-content tr:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.markdown-content hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgb(75, 85, 99),
+    transparent
+  );
+  margin: 2rem 0;
+}
+
+/* Code block with copy functionality */
+.code-block-container {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.code-block-header {
+  background-color: rgb(55, 65, 81);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: rgb(156, 163, 175);
+  border-bottom: 1px solid rgb(75, 85, 99);
+}
+
+.code-block-language {
+  font-weight: 500;
+}
+
+.copy-code-btn {
+  background: none;
+  border: 1px solid rgb(75, 85, 99);
+  color: rgb(156, 163, 175);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.copy-code-btn:hover {
+  background-color: rgb(75, 85, 99);
+  color: white;
+}
+
+.copy-code-btn.copied {
+  background-color: rgb(34, 197, 94);
+  color: white;
+  border-color: rgb(34, 197, 94);
+}
+
+/* Interactive markdown controls */
+.markdown-controls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.markdown-content:hover .markdown-controls,
+.markdown-content.selected .markdown-controls {
+  opacity: 1;
+}
+
+.markdown-control-btn {
+  background-color: rgba(31, 41, 55, 0.9);
+  color: rgb(156, 163, 175);
+  border: 1px solid rgba(75, 85, 99, 0.6);
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+  font-family: "Inter", sans-serif;
+}
+
+.markdown-control-btn:hover {
+  background-color: rgba(37, 99, 235, 0.9);
+  color: white;
+  border-color: rgba(59, 130, 246, 0.8);
+}
+
+.markdown-control-btn.active {
+  background-color: rgba(37, 99, 235, 0.9);
+  color: white;
+  border-color: rgba(59, 130, 246, 0.8);
+}
+
+/* Prism.js theme customization for dark mode */
+.markdown-content pre[class*="language-"] {
+  background-color: rgb(17, 24, 39) !important;
+  border: 1px solid rgb(55, 65, 81);
+}
+
+.markdown-content code[class*="language-"] {
+  background-color: rgb(17, 24, 39) !important;
+  color: rgb(229, 231, 235) !important;
+}
+
+/* Math support for markdown */
+.markdown-content .katex {
+  font-size: 1em;
+}
+
+.markdown-content .katex-display {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+/* Enhanced list styling */
+.markdown-content ul li::marker {
+  color: rgb(59, 130, 246);
+}
+
+.markdown-content ol li::marker {
+  color: rgb(59, 130, 246);
+  font-weight: 600;
+}
+
+/* Task list support */
+.markdown-content input[type="checkbox"] {
+  margin-right: 0.5rem;
+  accent-color: rgb(59, 130, 246);
+}
+
+/* Enhanced link styling */
+.markdown-content a:before {
+  content: "🔗 ";
+  opacity: 0.7;
+  font-size: 0.8em;
+}
+
+/* Improved table responsiveness */
+.markdown-content table {
+  max-width: 100%;
+  overflow-x: auto;
+  display: block;
+  white-space: nowrap;
+}
+
+.markdown-content table tbody {
+  display: table;
+  width: 100%;
+}
+
+/* Better code highlighting in tables */
+.markdown-content td code,
+.markdown-content th code {
+  background-color: rgb(17, 24, 39);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+/* Improved blockquote styling */
+.markdown-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-content blockquote::before {
+  content: "\201C";
+  font-size: 3em;
+  color: rgba(59, 130, 246, 0.3);
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  line-height: 1;
+}
+
+/* Selection styling improvements */
+.markdown-content.selected ::selection {
+  background-color: rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+.markdown-content.selected ::-moz-selection {
+  background-color: rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+/* Loading Animation */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+  border-radius: 50%;
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 2px solid rgb(59, 130, 246);
+  border-top-color: transparent;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(31, 41, 55);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(75, 85, 99);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(107, 114, 128);
+}
+
+/* Smooth transitions */
+.note {
+  transition: transform 0.1s ease-out, box-shadow 0.2s ease-out;
+}
+
+/* Zoom and Pan Indicators */
+.canvas-info {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  background-color: rgba(31, 41, 55, 0.9);
+  backdrop-filter: blur(4px);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Futuristic glow effects */
+.glow {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.note:hover {
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+/* Animation for note creation */
+@keyframes noteAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.note-appear {
+  animation: noteAppear 0.3s ease-out;
+}
+
+/* Image compression indicator */
+.image-compressed {
+  position: relative;
+}
+
+.image-compressed::after {
+  content: "compressed";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.image-compressed:hover::after {
+  opacity: 1;
+}
+
+/* Touch-friendly resize handles for mobile */
+@media (max-width: 768px) {
+  .resize-handle {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+/* Zoom level display animations */
+#zoom-level {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Cursor styles for better UX */
+#canvas {
+  cursor: grab;
+}
+
+#canvas:active {
+  cursor: grabbing;
+}
+
+/* Prevent text selection during canvas operations */
+.canvas-container,
+#canvas,
+#canvas-content {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Ensure proper transform origin for canvas content */
+#canvas-content {
+  transform-origin: 0 0 !important;
+}
+
+/* Toggle button for view/code mode */
+.note-toggle {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: rgba(31, 41, 55, 0.9);
+  color: rgb(156, 163, 175);
+  border: 1px solid rgba(75, 85, 99, 0.6);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+  font-family: "Inter", sans-serif;
+}
+
+.note-toggle:hover {
+  background-color: rgba(37, 99, 235, 0.9);
+  color: white;
+  border-color: rgba(59, 130, 246, 0.8);
+}
+
+.note.focused .note-toggle {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.note-toggle.active {
+  background-color: rgba(37, 99, 235, 0.9);
+  color: white;
+  border-color: rgba(59, 130, 246, 0.8);
+}

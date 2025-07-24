@@ -1,0 +1,409 @@
+/* Tailwind Extensions */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* Set default font */
+* {
+  font-family: "Inter", sans-serif;
+}
+
+/* Toolbar buttons */
+.toolbar-btn {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: rgb(55, 65, 81);
+  color: white;
+  transition: background-color 0.2s;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+}
+
+.toolbar-btn:hover {
+  background-color: rgb(37, 99, 235);
+}
+
+/* Modals */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: rgb(31, 41, 55);
+  border: 1px solid rgb(75, 85, 99);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  max-width: 28rem;
+  width: 100%;
+  margin: 0 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: rgb(55, 65, 81);
+  border: 1px solid rgb(75, 85, 99);
+  border-radius: 0.5rem;
+  color: white;
+  outline: none;
+}
+
+.input-field:focus {
+  box-shadow: 0 0 0 2px rgb(59, 130, 246);
+}
+
+.btn-primary {
+  padding: 0.5rem 1rem;
+  background-color: rgb(37, 99, 235);
+  color: white;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: rgb(29, 78, 216);
+}
+
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  background-color: rgb(75, 85, 99);
+  color: white;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: rgb(55, 65, 81);
+}
+
+.context-menu-item {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.context-menu-item:hover {
+  background-color: rgb(55, 65, 81);
+}
+
+/* Grid Background */
+#grid-background {
+  background-image: linear-gradient(
+      rgba(59, 130, 246, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Note Styles */
+.note {
+  position: absolute;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  cursor: move;
+  min-width: 200px;
+  min-height: 100px;
+}
+
+.note:hover {
+  border-color: rgb(59, 130, 246);
+}
+
+.note.selected {
+  border-color: rgb(59, 130, 246);
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.25);
+}
+
+.note-text {
+  background-color: rgba(254, 240, 138, 0.9);
+  backdrop-filter: blur(4px);
+  color: rgb(17, 24, 39);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  resize: none;
+  border: none;
+  outline: none;
+  min-height: 100px;
+  font-family: "Inter", sans-serif;
+}
+
+.note-image {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto;
+}
+
+.note-content {
+  width: 100%;
+  height: 100%;
+}
+
+/* Resize Handles */
+.resize-handle {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: rgb(59, 130, 246);
+  border: 1px solid white;
+  border-radius: 0.125rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.note.selected .resize-handle {
+  opacity: 1;
+}
+
+.resize-handle.se {
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+  transform: translate(50%, 50%);
+}
+
+.resize-handle.sw {
+  bottom: 0;
+  left: 0;
+  cursor: sw-resize;
+  transform: translate(-50%, 50%);
+}
+
+.resize-handle.ne {
+  top: 0;
+  right: 0;
+  cursor: ne-resize;
+  transform: translate(50%, -50%);
+}
+
+.resize-handle.nw {
+  top: 0;
+  left: 0;
+  cursor: nw-resize;
+  transform: translate(-50%, -50%);
+}
+
+.resize-handle.n {
+  top: 0;
+  left: 50%;
+  cursor: n-resize;
+  transform: translate(-50%, -50%);
+}
+
+.resize-handle.s {
+  bottom: 0;
+  left: 50%;
+  cursor: s-resize;
+  transform: translate(-50%, 50%);
+}
+
+.resize-handle.e {
+  right: 0;
+  top: 50%;
+  cursor: e-resize;
+  transform: translate(50%, -50%);
+}
+
+.resize-handle.w {
+  left: 0;
+  top: 50%;
+  cursor: w-resize;
+  transform: translate(-50%, -50%);
+}
+
+/* Markdown Content */
+.markdown-content {
+  max-width: none;
+  color: rgb(17, 24, 39);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.markdown-content h1 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-content h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-content h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.markdown-content p {
+  margin-bottom: 0.5rem;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-content code {
+  background-color: rgb(31, 41, 55);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  color: white;
+}
+
+.markdown-content pre {
+  background-color: rgb(31, 41, 55);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  overflow: auto;
+  color: white;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid rgb(156, 163, 175);
+  padding-left: 1rem;
+  font-style: italic;
+}
+
+/* Loading Animation */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+  border-radius: 50%;
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 2px solid rgb(59, 130, 246);
+  border-top-color: transparent;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(31, 41, 55);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(75, 85, 99);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(107, 114, 128);
+}
+
+/* Smooth transitions */
+.note {
+  transition: transform 0.1s ease-out, box-shadow 0.2s ease-out;
+}
+
+/* Zoom and Pan Indicators */
+.canvas-info {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  background-color: rgba(31, 41, 55, 0.9);
+  backdrop-filter: blur(4px);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Futuristic glow effects */
+.glow {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.note:hover {
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+/* Animation for note creation */
+@keyframes noteAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.note-appear {
+  animation: noteAppear 0.3s ease-out;
+}
+
+/* Image compression indicator */
+.image-compressed {
+  position: relative;
+}
+
+.image-compressed::after {
+  content: "compressed";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.image-compressed:hover::after {
+  opacity: 1;
+}
+
+/* Touch-friendly resize handles for mobile */
+@media (max-width: 768px) {
+  .resize-handle {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

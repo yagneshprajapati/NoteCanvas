@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coordinate Test</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #1a1a1a;
+        color: white;
+        font-family: Arial, sans-serif;
+      }
+      #canvas {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        border: 1px solid red;
+        overflow: hidden;
+        cursor: crosshair;
+      }
+      #content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-origin: 0 0;
+      }
+      .test-dot {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: yellow;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+      .cursor-dot {
+        background: red;
+      }
+      .world-dot {
+        background: blue;
+      }
+      #info {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-family: monospace;
+      }
+      button {
+        margin: 5px;
+        padding: 5px 10px;
+        background: #333;
+        color: white;
+        border: 1px solid #666;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="canvas">
+      <div id="content">
+        <!-- Test dots will be added here -->
+      </div>
+    </div>
+
+    <div id="info">
+      <div>Zoom: <span id="zoom">1.00</span></div>
+      <div>Pan: <span id="pan">0, 0</span></div>
+      <div>Mouse: <span id="mouse">0, 0</span></div>
+      <div>World: <span id="world">0, 0</span></div>
+      <div>
+        <button onclick="zoomIn()">Zoom In</button
+        ><button onclick="zoomOut()">Zoom Out</button>
+      </div>
+      <div>
+        <button onclick="resetZoom()">Reset</button
+        ><button onclick="addTestDot()">Add Dot</button>
+      </div>
+    </div>
+
+    <script>
+      let zoom = 1;
+      let panX = 0;
+      let panY = 0;
+      let lastMouseX = 0;
+      let lastMouseY = 0;
+
+      const canvas = document.getElementById("canvas");
+      const content = document.getElementById("content");
+
+      function updateTransform() {
+        content.style.transform = `matrix(${zoom}, 0, 0, ${zoom}, ${panX}, ${panY})`;
+        document.getElementById("zoom").textContent = zoom.toFixed(2);
+        document.getElementById("pan").textContent = `${panX.toFixed(
+          0
+        )}, ${panY.toFixed(0)}`;
+      }
+
+      function screenToWorld(screenX, screenY) {
+        const rect = canvas.getBoundingClientRect();
+        const canvasX = screenX - rect.left;
+        const canvasY = screenY - rect.top;
+        const worldX = (canvasX - panX) / zoom;
+        const worldY = (canvasY - panY) / zoom;
+        return { x: worldX, y: worldY };
+      }
+
+      function worldToScreen(worldX, worldY) {
+        const rect = canvas.getBoundingClientRect();
+        const canvasX = worldX * zoom + panX;
+        const canvasY = worldY * zoom + panY;
+        const screenX = canvasX + rect.left;
+        const screenY = canvasY + rect.top;
+        return { x: screenX, y: screenY };
+      }
+
+      canvas.addEventListener("mousemove", (e) => {
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+
+        const rect = canvas.getBoundingClientRect();
+        const canvasX = e.clientX - rect.left;
+        const canvasY = e.clientY - rect.top;
+
+        const world = screenToWorld(e.clientX, e.clientY);
+
+        document.getElementById("mouse").textContent = `${canvasX.toFixed(
+          0
+        )}, ${canvasY.toFixed(0)}`;
+        document.getElementById("world").textContent = `${world.x.toFixed(
+          0
+        )}, ${world.y.toFixed(0)}`;
+      });
+
+      canvas.addEventListener("wheel", (e) => {
+        e.preventDefault();
+
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const oldZoom = zoom;
+        const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
+        const newZoom = Math.max(0.1, Math.min(5, oldZoom * zoomFactor));
+
+        if (newZoom !== oldZoom) {
+          const worldX = (mouseX - panX) / oldZoom;
+          const worldY = (mouseY - panY) / oldZoom;
+
+          zoom = newZoom;
+          panX = mouseX - worldX * newZoom;
+          panY = mouseY - worldY * newZoom;
+
+          updateTransform();
+        }
+      });
+
+      function zoomIn() {
+        const rect = canvas.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const oldZoom = zoom;
+        const newZoom = Math.min(5, oldZoom * 1.2);
+
+        if (newZoom !== oldZoom) {
+          const worldX = (centerX - panX) / oldZoom;
+          const worldY = (centerY - panY) / oldZoom;
+
+          zoom = newZoom;
+          panX = centerX - worldX * newZoom;
+          panY = centerY - worldY * newZoom;
+
+          updateTransform();
+        }
+      }
+
+      function zoomOut() {
+        const rect = canvas.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const oldZoom = zoom;
+        const newZoom = Math.max(0.1, oldZoom / 1.2);
+
+        if (newZoom !== oldZoom) {
+          const worldX = (centerX - panX) / oldZoom;
+          const worldY = (centerY - panY) / oldZoom;
+
+          zoom = newZoom;
+          panX = centerX - worldX * newZoom;
+          panY = centerY - worldY * newZoom;
+
+          updateTransform();
+        }
+      }
+
+      function resetZoom() {
+        zoom = 1;
+        panX = 0;
+        panY = 0;
+        updateTransform();
+      }
+
+      function addTestDot() {
+        if (lastMouseX && lastMouseY) {
+          const world = screenToWorld(lastMouseX, lastMouseY);
+
+          // Add a dot at the world coordinates
+          const dot = document.createElement("div");
+          dot.className = "test-dot world-dot";
+          dot.style.left = world.x + "px";
+          dot.style.top = world.y + "px";
+          dot.title = `World: ${world.x.toFixed(0)}, ${world.y.toFixed(0)}`;
+          content.appendChild(dot);
+
+          console.log("Added dot at world:", world.x, world.y);
+
+          // Test: convert back to screen and see if it matches
+          const backToScreen = worldToScreen(world.x, world.y);
+          console.log("Original screen:", lastMouseX, lastMouseY);
+          console.log("Back to screen:", backToScreen.x, backToScreen.y);
+          console.log(
+            "Difference:",
+            Math.abs(lastMouseX - backToScreen.x),
+            Math.abs(lastMouseY - backToScreen.y)
+          );
+        }
+      }
+
+      updateTransform();
+    </script>
+  </body>
+</html>

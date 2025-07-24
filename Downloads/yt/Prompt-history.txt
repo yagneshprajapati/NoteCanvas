@@ -1,0 +1,40 @@
+this is prompt history to let you know what llm has given prompts though out till this.
+please do not modify this.
+
+1
+
+make me simple app using html, tailwind, js and uses it libs cdns.
+
+main purpose is app to take notes, or do something persnal (one page only)
+and notes supports texts and images(it compressed to sertain point)
+notes is like figma canvas page. things free to move and large space and shortcuts same as figma
+
+now here is twist. the text support md format. and cant rotate but resozeble annd image too rezible and paste derectly suport in btoh text image. furturistic look
+
+and all data must be incrptedly stored in indexdb of broswer. and have encrpted with password import and export option. if imported the past data loss and new from file comes.
+and export may ask which password to set and do it.
+
+it need to extremly simple to make and code it but extremly inteligent without ai. INTELLIGENT ux ui EVERY STUFFS oragnied code files. everything
+
+2
+
+I think thier are some BUGS in our appliction
+
+3
+
+THier are really big issues and bugs in our app.. please figure out and fix them all.. make sure perfectly runs smooth and no BUGS
+
+4
+
+just fix issue that Draging space by scroll btn hold is only works in between elements space not area where elements not present.
+and not zooming like figma like cont + scroll up or dwn at spefic area kind fetures..
+
+5
+
+still some bugs are thier
+-> unfocus any elemnt only happens in some areas where lot of elemnt present or inbetween not everywhere
+-> zoom in out should same as figma from cursor it self.
+
+6  
+
+still not worked Figma-like Zoom Behavior from cursor pointer zoom out or in should happen like figma not from bottom right
